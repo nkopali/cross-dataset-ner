@@ -1,0 +1,24 @@
+python run_ner.py --data_dir ./NCBI-disease --model_name_or_path ./model --output_dir ./output/NCBI-disease --num_train_epochs 5 --do_train --do_eval --do_predict --overwrite_output_dir --gradient_accumulation_steps 2 --learning_rate 3e-5 --warmup_steps 1710 --evaluation_strategy epoch --max_seq_length 512 --per_device_train_batch_size 8 --eval_accumulation_steps 1 --load_best_model_at_end --metric_for_best_model f1
+
+python run_ner.py --data_dir ./BC5CDR-disease --model_name_or_path ./model --output_dir ./output/BC5CDR-disease --num_train_epochs 5 --do_train --do_eval --do_predict --overwrite_output_dir --gradient_accumulation_steps 2 --learning_rate 3e-5 --warmup_steps 1710 --evaluation_strategy epoch --max_seq_length 512 --per_device_train_batch_size 8 --eval_accumulation_steps 1 --load_best_model_at_end --metric_for_best_model f1
+
+#Merged
+python run_ner.py --data_dir ./BC5CDR-disease --model_name_or_path ./model --output_dir ./output/BC5CDR-disease-merged --num_train_epochs 5 --do_train --do_eval --do_predict --overwrite_output_dir --gradient_accumulation_steps 2 --learning_rate 3e-5 --warmup_steps 1710 --evaluation_strategy epoch --max_seq_length 512 --per_device_train_batch_size 8 --eval_accumulation_steps 1 --load_best_model_at_end --metric_for_best_model f1
+
+Cross Prediction
+
+python run_ner.py --data_dir ./BC5CDR-disease --model_name_or_path ./output/NCBI-disease --output_dir ./output/NCBI-diseaseToBC5CDR --num_train_epochs 5 --do_eval --do_predict --overwrite_output_dir --gradient_accumulation_steps 2 --learning_rate 3e-5 --warmup_steps 1710 --evaluation_strategy epoch --max_seq_length 512 --per_device_train_batch_size 8 --eval_accumulation_steps 1 --load_best_model_at_end --metric_for_best_model f1
+
+python run_ner.py --data_dir ./NCBI-disease --model_name_or_path ./output/BC5CDR-disease --output_dir ./output/BC5CDR-diseaseToNCBI --num_train_epochs 5 --do_eval --do_predict --overwrite_output_dir --gradient_accumulation_steps 2 --learning_rate 3e-5 --warmup_steps 1710 --evaluation_strategy epoch --max_seq_length 512 --per_device_train_batch_size 8 --eval_accumulation_steps 1 --load_best_model_at_end --metric_for_best_model f1
+
+#Merged
+python run_ner.py --data_dir ./NCBI-disease --model_name_or_path ./output/BC5CDR-disease-merged-2 --output_dir ./output/BC5CDR-disease-merged-toncbi  --num_train_epochs 5 --do_eval --do_predict --overwrite_output_dir --gradient_accumulation_steps 2 --learning_rate 3e-5 --warmup_steps 1710 --evaluation_strategy epoch --max_seq_length 512 --per_device_train_batch_size 8 --eval_accumulation_steps 1 --load_best_model_at_end --metric_for_best_model f1
+
+#Retrain
+python run_ner.py --data_dir ./NCBI-disease --model_name_or_path ./output/BC5CDR-disease-ready --output_dir ./output/BC5CDR-disease-retrained --num_train_epochs 10 --do_train --do_eval --do_predict --overwrite_output_dir --gradient_accumulation_steps 2 --learning_rate 3e-5 --warmup_steps 1710  --max_seq_length 512 --per_device_train_batch_size 8 --eval_accumulation_steps 1 --evaluation_strategy epoch
+
+
+#test retrain
+python run_ner.py --data_dir ./BC5CDR-disease --model_name_or_path ./output/BC5CDR-disease-retrained --output_dir ./output/BC5CDR-Test --num_train_epochs 5 --do_eval --do_predict --overwrite_output_dir --gradient_accumulation_steps 2 --learning_rate 3e-5 --warmup_steps 1710 --evaluation_strategy epoch --max_seq_length 512 --per_device_train_batch_size 8 --eval_accumulation_steps 1 
+
+python run_ner.py --data_dir ./NCBI-disease --model_name_or_path ./output/BC5CDR-disease-retrained --output_dir ./output/BC5CDR-Test-2 --num_train_epochs 5 --do_eval --do_predict --overwrite_output_dir --gradient_accumulation_steps 2 --learning_rate 3e-5 --warmup_steps 1710 --evaluation_strategy epoch --max_seq_length 512 --per_device_train_batch_size 8 --eval_accumulation_steps 1 
