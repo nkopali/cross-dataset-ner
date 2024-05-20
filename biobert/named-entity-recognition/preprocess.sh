@@ -1,6 +1,6 @@
 #!/bin/bash
 #ENTITIES="NCBI-disease BC5CDR-disease BC5CDR-chem BC4CHEMD JNLPBA BC2GM linnaeus s800"
-ENTITIES="BC5CDR-disease"
+ENTITIES="BC5CDR-disease NCBI-disease"
 
 MAX_LENGTH=128
 

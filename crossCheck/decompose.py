@@ -9,7 +9,7 @@ def decompose(filepath):
     # print("NCBI length: ", len(df2))
     # print("=====================================")
 
-    df["Tag"] = df["Tag"].apply(ast.literal_eval)
+    df["Tags"] = df["Tags"].apply(ast.literal_eval)
 
     # Define the path for the output file
     output_file_path = "train.tsv"
@@ -19,7 +19,7 @@ def decompose(filepath):
 
     # Iterate over each row of the DataFrame
     for index, row in df.iterrows():
-        tags_list = row["Tag"]
+        tags_list = row["Tags"]
         for word, label in tags_list:
             all_tags_content += f"{word}\t{label}\n"
         all_tags_content += "\n"  # Add a newline at the end of each row's content
@@ -32,4 +32,4 @@ def decompose(filepath):
     output_file_path
 
 
-decompose("csv/train_set_not_in_bc5_first_no_o.csv")
+decompose("filtered_test_ncbi_gold.csv")
