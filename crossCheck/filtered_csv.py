@@ -3,7 +3,7 @@ import ast
 
 # Load the CSV files
 train_df = pd.read_csv('csv/train_bc5_gold.csv')
-test_df = pd.read_csv('csv/test_ncbi_gold.csv')
+test_df = pd.read_csv('csv/test_bc5_gold.csv')
 print(train_df.shape)
 print(test_df.shape)
 
@@ -34,6 +34,6 @@ def contains_train_entity(tags):
 filtered_test_df = test_df[test_df['Tags'].apply(contains_train_entity)]
 
 # Save the filtered sentences to a new CSV file
-filtered_test_df.to_csv('filtered_test_ncbi_gold.csv', index=False)
+filtered_test_df.to_csv('filtered_test_bc5_gold.csv', index=False)
 
 print(filtered_test_df.shape)

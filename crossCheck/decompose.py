@@ -12,7 +12,7 @@ def decompose(filepath):
     df["Tags"] = df["Tags"].apply(ast.literal_eval)
 
     # Define the path for the output file
-    output_file_path = "train.tsv"
+    output_file_path = "test.tsv"
 
     # Initialize an empty string to aggregate the content
     all_tags_content = ""

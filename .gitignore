@@ -1,2 +1,3 @@
-./biobert/named-entity-recognition/output/
-./kebiolm/ner/output/
+biobert/named-entity-recognition/output/
+kebiolm/ner/output/
+kebiolm/ner/model/
