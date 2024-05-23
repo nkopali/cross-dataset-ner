@@ -28,9 +28,20 @@ def basic_analysis(df, dataset_name):
             if tag[1]!= 'O':  # Only count entities (B, I)
                 entity_chars += len(tag[0])
         return entity_chars
+    
+    # Calculate average number of entities in a sentence
+    def count_entities(tags):
+        entities = 0
+        for tag in tags:
+            if tag[1]!= 'O':  # Only count entities (B, I)
+                entities += 1
+        return entities
 
     avg_entity_chars = df['Tags'].apply(count_entity_chars).mean()
     print(f'Average number of characters in an entity: {avg_entity_chars:.2f}')
+
+    avg_entity_sentence = df['Tags'].apply(count_entities).mean()
+    print(f'Average number of entities in a sentence: {avg_entity_sentence:.2f}')
 
 # Read the CSV file
 df1 = read_csvs('csv/train_bc5_gold.csv')
