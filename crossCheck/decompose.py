@@ -32,4 +32,4 @@ def decompose(filepath):
     output_file_path
 
 
-decompose("filtered_test_ncbi_gold.csv")
+decompose("filtered_test_bc5_gold.csv")

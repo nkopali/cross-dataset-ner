@@ -288,6 +288,49 @@ def main():
     results = {}
     if training_args.do_eval:
         logger.info("*** Evaluate ***")
+        eval_dataset = NerDataset(
+            data_dir=data_args.data_dir,
+            tokenizer=tokenizer,
+            labels=labels,
+            model_type=config.model_type,
+            max_seq_length=data_args.max_seq_length,
+            overwrite_cache=data_args.overwrite_cache,
+            mode=Split.dev,
+        )
+
+        predictions, label_ids, metrics = trainer.predict(eval_dataset)
+        preds_list, _ = align_predictions(predictions, label_ids)
+
+        output_test_predictions_file = os.path.join(
+                    training_args.output_dir, "eval_predictions.txt"
+                )
+        if trainer.is_world_process_zero():
+            with open(output_test_predictions_file, "w") as writer:
+                with open(os.path.join(data_args.data_dir, "devel.txt"), "r") as f:
+                    example_id = 0
+                    for line in f:
+                        if line.startswith("-DOCSTART-") or line == "" or line == "\n":
+                            writer.write(line)
+                            if not preds_list[example_id]:
+                                example_id += 1
+                        elif preds_list[example_id]:
+                            entity_label = preds_list[example_id].pop(0)
+                            if entity_label == "O":
+                                output_line = (
+                                    line.split()[0] + " " + entity_label + "\n"
+                                )
+                            else:
+                                output_line = (
+                                    line.split()[0] + " " + entity_label[0] + "\n"
+                                )
+                            # output_line = line.split()[0] + " " + preds_list[example_id].pop(0) + "\n"
+                            writer.write(output_line)
+                        else:
+                            logger.warning(
+                                "Maximum sequence length exceeded: No prediction for '%s'.",
+                                line.split()[0],
+                            )
+
 
         result = trainer.evaluate()
 

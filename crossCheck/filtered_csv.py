@@ -3,10 +3,12 @@ import ast
 
 # Load the CSV files
 train_df = pd.read_csv('csv/train_bc5_gold.csv')
-test_df = pd.read_csv('csv/test_bc5_gold.csv')
-print(train_df.shape)
-print(test_df.shape)
+test_df = pd.read_csv('csv/dev_bc5.csv')
 
+dev = pd.read_csv('csv/test_bc5_gold.csv')
+print("Train", train_df.shape)
+print("Dev", test_df.shape)
+print("Test", dev.shape)
 # Extract entities from train_df, excluding 'O' entities
 def extract_entities(df):
     train_entities = set()
