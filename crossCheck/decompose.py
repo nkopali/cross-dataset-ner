@@ -5,14 +5,10 @@ import ast
 def decompose(filepath):
     df = pd.read_csv(filepath)
 
-    # print("BC5CDR length: ", len(df1))
-    # print("NCBI length: ", len(df2))
-    # print("=====================================")
-
     df["Tags"] = df["Tags"].apply(ast.literal_eval)
 
     # Define the path for the output file
-    output_file_path = "test.tsv"
+    output_file_path = "dev.tsv"
 
     # Initialize an empty string to aggregate the content
     all_tags_content = ""
@@ -28,8 +24,6 @@ def decompose(filepath):
     with open(output_file_path, "w") as file:
         file.write(all_tags_content)
 
-    # Provide the path to the created file
-    output_file_path
 
 
-decompose("filtered_test_bc5_gold.csv")
+# decompose("filtered_test_bc5_gold.csv")

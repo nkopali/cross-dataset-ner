@@ -1,14 +1,16 @@
 import pandas as pd
 import ast
+from decompose import decompose
 
 # Load the CSV files
 train_df = pd.read_csv('csv/train_bc5_gold.csv')
-test_df = pd.read_csv('csv/dev_bc5.csv')
+dev_df = pd.read_csv('csv/dev_bc5.csv')
 
-dev = pd.read_csv('csv/test_bc5_gold.csv')
+# dev = pd.read_csv('csv/test_bc5_gold.csv')
 print("Train", train_df.shape)
-print("Dev", test_df.shape)
-print("Test", dev.shape)
+print("Dev", dev_df.shape)
+# print("Test", dev.shape)
+
 # Extract entities from train_df, excluding 'O' entities
 def extract_entities(df):
     train_entities = set()
@@ -19,11 +21,11 @@ def extract_entities(df):
     return train_entities
 
 train_entities = extract_entities(train_df)
-print("Train entities len: ", len(train_entities))
-test_entities = extract_entities(test_df)
-print("Test entities len: ", len(test_entities))
-intersection_entities = train_entities.intersection(test_entities)
-print("Intersection len: ", len(intersection_entities))
+# print("Train entities len: ", len(train_entities))
+# dev_entities = extract_entities(dev_df)
+# print("Dev entities len: ", len(dev_entities))
+# intersection_entities = train_entities.intersection(dev_entities)
+# print("Intersection len: ", len(intersection_entities))
 
 # Function to check if a sentence contains any of the train entities
 def contains_train_entity(tags):
@@ -32,10 +34,11 @@ def contains_train_entity(tags):
             return True
     return False
 
-# Filter test_df to include only rows where the entity is found in train_entities
-filtered_test_df = test_df[test_df['Tags'].apply(contains_train_entity)]
+# Filter dev_df to include only rows where the entity is found in train_entities
+filtered_dev_df = dev_df[dev_df['Tags'].apply(contains_train_entity)]
 
 # Save the filtered sentences to a new CSV file
-filtered_test_df.to_csv('filtered_test_bc5_gold.csv', index=False)
+filtered_dev_df.to_csv('filtered_dev_bc5_gold.csv', index=False)
 
-print(filtered_test_df.shape)
+print(filtered_dev_df.shape)
+decompose("filtered_dev_bc5_gold.csv")

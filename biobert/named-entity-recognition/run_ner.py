@@ -161,6 +161,7 @@ def main():
     labels = get_labels(data_args.labels)
     label_map: Dict[int, str] = {i: label for i, label in enumerate(labels)}
     num_labels = len(labels)
+    print(labels)
 
     # Load pretrained model and tokenizer
     # Distributed training:
@@ -236,6 +237,8 @@ def main():
     def align_predictions(
         predictions: np.ndarray, label_ids: np.ndarray
     ) -> Tuple[List[int], List[int]]:
+        if type(predictions) is tuple:
+            predictions = predictions[0]
         preds = np.argmax(predictions, axis=2)
 
         batch_size, seq_len = preds.shape
@@ -288,15 +291,6 @@ def main():
     results = {}
     if training_args.do_eval:
         logger.info("*** Evaluate ***")
-        eval_dataset = NerDataset(
-            data_dir=data_args.data_dir,
-            tokenizer=tokenizer,
-            labels=labels,
-            model_type=config.model_type,
-            max_seq_length=data_args.max_seq_length,
-            overwrite_cache=data_args.overwrite_cache,
-            mode=Split.dev,
-        )
 
         predictions, label_ids, metrics = trainer.predict(eval_dataset)
         preds_list, _ = align_predictions(predictions, label_ids)
@@ -306,7 +300,7 @@ def main():
                 )
         if trainer.is_world_process_zero():
             with open(output_test_predictions_file, "w") as writer:
-                with open(os.path.join(data_args.data_dir, "devel.txt"), "r") as f:
+                with open(os.path.join(data_args.data_dir, "dev.txt"), "r") as f:
                     example_id = 0
                     for line in f:
                         if line.startswith("-DOCSTART-") or line == "" or line == "\n":

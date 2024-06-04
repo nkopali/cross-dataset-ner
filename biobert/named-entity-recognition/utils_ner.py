@@ -62,8 +62,8 @@ class InputFeatures:
 
 
 class Split(Enum):
-    train = "train_dev"
-    dev = "devel"
+    train = "train" # Before it was train_dev
+    dev = "dev"
     test = "test"
 
 
@@ -140,7 +140,7 @@ if is_torch_available():
 if is_tf_available():
     import tensorflow as tf
 
-    class TFNerDataset:
+    class TFNerDataset: #This is not used in the code
         """
         This will be superseded by a framework-agnostic approach
         soon.
