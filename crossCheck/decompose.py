@@ -26,4 +26,4 @@ def decompose(filepath):
 
 
 
-# decompose("filtered_test_bc5_gold.csv")
+decompose("train_merged.csv")
