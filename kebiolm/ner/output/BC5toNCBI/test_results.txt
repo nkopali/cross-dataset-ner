@@ -1,0 +1,5 @@
+eval_loss = 0.1999364048242569
+eval_accuracy_score = 0.9676695105523125
+eval_precision = 0.75
+eval_recall = 0.68125
+eval_f1 = 0.7139737991266376
