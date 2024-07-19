@@ -1,8 +1,8 @@
 import pandas as pd
 import ast
 
-gold_df = pd.read_csv('filtered_dev_ncbi_gold_onbc5.csv')
-pred_df1 = pd.read_csv('csv/val_ncbi_pred_onbc5.csv')
+gold_df = pd.read_csv('filtered_dev_bc5_gold_onncbi.csv')
+pred_df1 = pd.read_csv('eval_ncbitoBC5.csv')
 # pred_df1 = pd.read_csv('csv/val_ncbi_pred_onncbi.csv')
 
 diff_sentences = []
@@ -42,6 +42,6 @@ for index, gold_row  in gold_df.iterrows():
 
 diff_tags_df = pd.DataFrame(diff_tags)
 
-diff_tags_df.to_csv('diff_tags_new_bc5.csv', index=False)
+diff_tags_df.to_csv('diff_tags_new_ncbitobc5.csv', index=False)
 
 

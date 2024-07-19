@@ -3,7 +3,7 @@ import ast
 from decompose import decompose
 
 # Load the CSV files
-train_df = pd.read_csv('csv/train_bc5_gold.csv')
+train_df = pd.read_csv('csv/train_ncbi_gold.csv')
 dev_df = pd.read_csv('csv/dev_bc5.csv')
 
 # dev = pd.read_csv('csv/test_bc5_gold.csv')
@@ -43,7 +43,7 @@ def contains_train_entity(tags):
 filtered_dev_df = dev_df[dev_df['Tags'].apply(contains_train_entity)]
 
 # Save the filtered sentences to a new CSV file
-filtered_dev_df.to_csv('filtered_dev_bc5_gold_onbc5.csv', index=False)
+filtered_dev_df.to_csv('filtered_dev_bc5_gold_onncbi.csv', index=False)
 
 print(filtered_dev_df.shape)
-decompose("filtered_dev_bc5_gold_onbc5.csv")
+decompose("filtered_dev_bc5_gold_onncbi.csv")
