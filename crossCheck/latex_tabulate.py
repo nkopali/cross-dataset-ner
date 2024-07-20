@@ -56,8 +56,11 @@ def process(df, name):
                     temp_list.append(temp_tags.strip())
                 temp_tags = tag[0] + " "
                 temp_index = tag_index
+            # if row['Sentence'].startswith("To begin to address the hypothesis that abnormal"):
+            #     print(temp_index,temp_tags)
         if temp_tags:
             temp_list.append(temp_tags.strip())
+
         consecutive_tags.append(temp_list)
 
     df['Tags'] = consecutive_tags
@@ -103,8 +106,6 @@ headers = ["Data", "Sentence", "Gold", "Model",  'FP', 'FN', 'Overlap', 'Tags']
 pd.set_option('display.max_columns', None)
 
 df_combined = pd.concat([bc5_df, ncbi_df], ignore_index=True)
-# print(df_combined.head())
-# print(df_combined.tail())
 
 # Generate LaTeX table using tabulate
 latex_table = tabulate(df_combined, headers=headers, tablefmt="latex_longtable", showindex=False, stralign='left')
@@ -114,9 +115,6 @@ column_widths = "{|p{0.9cm}|p{2.9cm}|p{1.6cm}|p{1.6cm}|p{0.4cm}|p{0.4cm}|p{2cm}|
 latex_table = latex_table.replace('\\begin{longtable}', '\\begin{longtable}' + column_widths)
 latex_table = latex_table.replace('{llllrrll}', '')
 latex_table = latex_table.replace('\\\\', '\\\\ \hline')
-
-
-# print(latex_table)
 
 with open('latex_table.txt', 'w') as f:
     f.write(latex_table)
