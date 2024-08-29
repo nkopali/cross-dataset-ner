@@ -117,4 +117,6 @@
  NCBI   & atm and p53 cooperate in apoptosis and suppression of tumorigenesis , but not in resistance to acute radiation toxicity .                                                                                                                                                                                                        & ['acute', 'radiation', 'toxicity']       & ['-', '-', '-']                                 &    0 &    3 & []                     & ['acute radiation toxicity']             & [('acute', 'ADJ'), ('radiation', 'NOUN'), ('toxicity', 'NOUN')]                                     \\ \hline
  NCBI   & wt - VHL protein inhibited VEGF promoter activity in a dose - dependent manner up to 5 - to 10 - fold .                                                                                                                                                                                                                          & ['-']                                    & ['VHL']                                         &    1 &    0 & []                     & ['VHL']                                  & [('VHL', 'PROPN')]                                                                                  \\ \hline
 \hline
+\caption{Errors from both datasets}
+\label{table:error_table}
 \end{longtable}
