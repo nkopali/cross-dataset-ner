@@ -3,7 +3,7 @@ import stanza
 import spacy
 import ast
 
-data = pd.read_csv('diff_tags_combined_split.csv')
+data = pd.read_csv('dataMerged.csv')
 
 df = pd.DataFrame(data)
 
@@ -20,17 +20,23 @@ def pos_tagging_stanza(tags):
         pos_tags.append([(word.text, word.upos) for sent in doc.sentences for word in sent.words])
     return pos_tags
 
-def pos_tagging_spacy(tags):
-    pos_tags = []
-    for tag in tags:
-        doc = nlp_spacy(tag)
-        pos_tags.append([(token.text, token.pos_) for token in doc])
-    return pos_tags
+# def pos_tagging_spacy(tags):
+#     pos_tags = []
+#     for tag in tags:
+#         doc = nlp_spacy(tag)
+#         pos_tags.append([(token.text, token.pos_) for token in doc])
+#     return pos_tags
 
 df['Tags'] = df['Tags'].apply(ast.literal_eval)
 
 # Apply POS tagging to the "Tags" column using Stanza
-df['Tags_POS_Stanza'] = df['Tags'].apply(lambda tags: pos_tagging_stanza(tags))
+df['stanza_Tags'] = df['Tags'].apply(lambda tags: pos_tagging_stanza(tags))
+
+df['stanza_FP'] = df['FP'].apply(lambda tags: pos_tagging_stanza(ast.literal_eval(tags)))
+
+df['stanza_FN'] = df['FN'].apply(lambda tags: pos_tagging_stanza(ast.literal_eval(tags)))
+
+df['stanza_Overlap'] = df['Overlap'].apply(lambda tags: pos_tagging_stanza(ast.literal_eval(tags)))
 
 # Apply POS tagging to the "Tags" column using SpaCy
 # df['Tags_POS_SpaCy'] = df['Tags'].apply(lambda tags: pos_tagging_spacy(tags))
@@ -39,5 +45,5 @@ pd.set_option('display.max_columns', None)  # Ensure all columns are shown
 
 # Display the resulting DataFrame
 # print(df[['Tags', 'Tags_POS_Stanza', 'Tags_POS_SpaCy']])
-df.to_csv("pos_tagged_data.csv", index=False)
+df.to_csv("pos_tagged_dataMerged.csv", index=False)
 
