@@ -101,7 +101,7 @@ def process(df, name):
 ncbi_df = process(ncbi_df, "NCBI")
 ncbi_df.to_csv("ncbitobc5LatexConsecutive.csv", index=False)
 # Column headers
-headers = ["Data", "Sentence", "Gold", "Model",  'FP', 'FN', 'Overlap']
+headers = ["Data", "Sentence", "Gold", "Model",  'FP', 'FN', 'Overlap', 'Tags']
 # sequential = pd.read_csv('pos_tagged_data_sequencetag.csv')
 
 # pd.set_option('display.max_columns', None)
