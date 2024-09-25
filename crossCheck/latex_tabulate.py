@@ -3,10 +3,10 @@ import pandas as pd
 import ast
 
 bc5_df = pd.read_csv('diff_tags_new_bc5.csv')
-ncbi_df = pd.read_csv('diff_tags_new_ncbi.csv')
+ncbi_df = pd.read_csv('diff_tags_new_ncbitobc5.csv')
 
 def process(df, name):
-        
+    print(df)
     # Group by Sentence and aggregate the Gold and Pred columns
     df = df.groupby('Sentence').agg({
         'Gold': lambda x: list(x),
@@ -35,35 +35,35 @@ def process(df, name):
     # Apply functions to create new columns
     df['FP'], df['FN'], df['Overlap'] = zip(*df.apply(lambda row: check_fp_fn(row['Gold'], row['Pred']), axis=1))
     
-    # # Find consecutive tags
-    # consecutive_tags = []
-    # for index, row in df.iterrows():
-    #     df_gold_tags = [ast.literal_eval(tag) for tag in row['Gold']]
-    #     tokens = row['Sentence'].split()
-    #     temp_index = -1
-    #     temp_tags = ""
-    #     temp_list = []
-    #     for tag in df_gold_tags:
-    #         tag_index = tokens.index(tag[0])
-    #         if temp_index == -1:
-    #             temp_tags += tag[0] + " "
-    #             temp_index = tag_index
-    #         elif tag_index == temp_index + 1:
-    #             temp_tags += tag[0] + " "
-    #             temp_index = tag_index
-    #         else:
-    #             if temp_tags:
-    #                 temp_list.append(temp_tags.strip())
-    #             temp_tags = tag[0] + " "
-    #             temp_index = tag_index
-    #         # if row['Sentence'].startswith("To begin to address the hypothesis that abnormal"):
-    #         #     print(temp_index,temp_tags)
-    #     if temp_tags:
-    #         temp_list.append(temp_tags.strip())
+    # Find consecutive tags
+    consecutive_tags = []
+    for index, row in df.iterrows():
+        df_gold_tags = [ast.literal_eval(tag) for tag in row['Gold']]
+        tokens = row['Sentence'].split()
+        temp_index = -1
+        temp_tags = ""
+        temp_list = []
+        for tag in df_gold_tags:
+            tag_index = tokens.index(tag[0])
+            if temp_index == -1:
+                temp_tags += tag[0] + " "
+                temp_index = tag_index
+            elif tag_index == temp_index + 1:
+                temp_tags += tag[0] + " "
+                temp_index = tag_index
+            else:
+                if temp_tags:
+                    temp_list.append(temp_tags.strip())
+                temp_tags = tag[0] + " "
+                temp_index = tag_index
+            # if row['Sentence'].startswith("To begin to address the hypothesis that abnormal"):
+            #     print(temp_index,temp_tags)
+        if temp_tags:
+            temp_list.append(temp_tags.strip())
 
-    #     consecutive_tags.append(temp_list)
+        consecutive_tags.append(temp_list)
 
-    # df['Tags'] = consecutive_tags
+    df['Tags'] = consecutive_tags
             
     
     df_new_gold_tags = []
@@ -97,28 +97,28 @@ def process(df, name):
     df['Pred'] = df_new_pred_tags
     return df
 
-bc5_df = process(bc5_df, "BC5")
+# bc5_df = process(bc5_df, "BC5")
 ncbi_df = process(ncbi_df, "NCBI")
-
+ncbi_df.to_csv("ncbitobc5LatexConsecutive.csv", index=False)
 # Column headers
 headers = ["Data", "Sentence", "Gold", "Model",  'FP', 'FN', 'Overlap']
-sequential = pd.read_csv('pos_tagged_data_sequencetag.csv')
+# sequential = pd.read_csv('pos_tagged_data_sequencetag.csv')
 
-pd.set_option('display.max_columns', None)
+# pd.set_option('display.max_columns', None)
 
-df_combined = pd.concat([bc5_df, ncbi_df], ignore_index=True)
-df_combined.to_csv('data_noseq.csv', index=False)
+# df_combined = pd.concat([bc5_df, ncbi_df], ignore_index=True)
+# df_combined.to_csv('data_noseq.csv', index=False)
 
-df_combined['Tags'] = sequential['Tags']
-df_combined.to_csv('dataMerged.csv', index=False)
-# # Generate LaTeX table using tabulate
-# latex_table = tabulate(df_combined, headers=headers, tablefmt="latex_longtable", showindex=False, stralign='left')
+# df_combined['Tags'] = sequential['Tags']
+# df_combined.to_csv('dataMerged.csv', index=False)
+# Generate LaTeX table using tabulate
+latex_table = tabulate(ncbi_df, headers=headers, tablefmt="latex_longtable", showindex=False, stralign='left')
 
-# # Modify the LaTeX table to use longtable environment
-# column_widths = "{|p{0.9cm}|p{2.9cm}|p{1.6cm}|p{1.6cm}|p{0.4cm}|p{0.4cm}|p{2cm}|p{2cm}|}"
-# latex_table = latex_table.replace('\\begin{longtable}', '\\begin{longtable}' + column_widths)
-# latex_table = latex_table.replace('{llllrrll}', '')
-# latex_table = latex_table.replace('\\\\', '\\\\ \hline')
+# Modify the LaTeX table to use longtable environment
+column_widths = "{|p{0.9cm}|p{2.9cm}|p{1.6cm}|p{1.6cm}|p{0.4cm}|p{0.4cm}|p{2cm}|p{2cm}|}"
+latex_table = latex_table.replace('\\begin{longtable}', '\\begin{longtable}' + column_widths)
+latex_table = latex_table.replace('{llllrrll}', '')
+latex_table = latex_table.replace('\\\\', '\\\\ \hline')
 
 
 # headers = ["Data", "Sentence", "Gold", "Model",  'FP', 'FN', 'Overlap', 'Tags', 'POS_Stanza']
@@ -129,7 +129,7 @@ df_combined.to_csv('dataMerged.csv', index=False)
 # latex_table = latex_table.replace('\\begin{longtable}', '\\begin{longtable}' + column_widths)
 # latex_table = latex_table.replace('{llllrrlll}', '')
 # latex_table = latex_table.replace('\\\\', '\\\\ \hline')
-# with open('latex_table.txt', 'w') as f:
-#     f.write(latex_table)
+with open('latex_table2.txt', 'w') as f:
+    f.write(latex_table)
 
 # df_combined.to_csv('diff_tags_combined.csv', index=False)

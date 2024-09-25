@@ -1,10 +1,9 @@
 import pandas as pd
 import ast
 
-gold_df = pd.read_csv('filtered_dev_bc5_gold_onncbi.csv')
-pred_df1 = pd.read_csv('eval_ncbitoBC5.csv')
+gold_df = pd.read_csv('filtered_dev_bc5_onncbi.csv')
+pred_df1 = pd.read_csv('ncbitobc5-filtered-newdev.csv')
 # pred_df1 = pd.read_csv('csv/val_ncbi_pred_onncbi.csv')
-
 diff_sentences = []
 gold_sentences = []
 diff_tags = []

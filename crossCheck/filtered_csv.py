@@ -4,7 +4,7 @@ from decompose import decompose
 
 # Load the CSV files
 train_df = pd.read_csv('csv/train_ncbi_gold.csv')
-dev_df = pd.read_csv('csv/dev_bc5.csv')
+dev_df = pd.read_csv('csv/dev_ncbi.csv')
 
 # dev = pd.read_csv('csv/test_bc5_gold.csv')
 print("Train", train_df.shape)
@@ -23,27 +23,21 @@ def extract_entities(df):
     return train_entities, train_tag_words
 
 train_entities, train_tag_words = extract_entities(train_df)
-# print("Train entities len: ", len(train_entities))
-# dev_entities = extract_entities(dev_df)
-# print("Dev entities len: ", len(dev_entities))
-# intersection_entities = train_entities.intersection(dev_entities)
-# print("Intersection len: ", len(intersection_entities))
 
 # Function to check if a sentence contains any of the train entities
 def contains_train_entity(tags):
     for word, entity in ast.literal_eval(tags):
         if entity != 'O':
-            if (word, entity) not in train_entities and word not in train_tag_words:
+            if (word, entity) not in train_entities :
                 return False
-        # if (word, entity) in train_entities:
-        #     return True
     return True
 
 # Filter dev_df to include only rows where the entity is found in train_entities
 filtered_dev_df = dev_df[dev_df['Tags'].apply(contains_train_entity)]
 
-# Save the filtered sentences to a new CSV file
-filtered_dev_df.to_csv('filtered_dev_bc5_gold_onncbi.csv', index=False)
+print(len(filtered_dev_df))
+# filename = "filtered_dev_bc5_onncbi.csv"
+# # Save the filtered sentences to a new CSV file
+# filtered_dev_df.to_csv(filename, index=False)
 
-print(filtered_dev_df.shape)
-decompose("filtered_dev_bc5_gold_onncbi.csv")
+# decompose(filename)

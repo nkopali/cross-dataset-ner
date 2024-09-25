@@ -1,0 +1,53 @@
+\begin{longtable}{lr}
+\hline
+ Pattern                      &   Frequency \\
+\hline
+\endhead
+ NOUN                         &         122 \\
+ ADJ NOUN                     &          61 \\
+ PROPN                        &          48 \\
+ ADJ                          &          36 \\
+ NOUN NOUN                    &          33 \\
+ ADJ NOUN NOUN                &          12 \\
+ ADJ ADJ NOUN                 &           4 \\
+ VERB NOUN NOUN               &           4 \\
+ VERB NOUN                    &           4 \\
+ PUNCT ADJ NOUN               &           3 \\
+ CCONJ                        &           3 \\
+ PROPN PUNCT NOUN             &           3 \\
+ ADV                          &           3 \\
+ NOUN PUNCT VERB NOUN         &           2 \\
+ VERB                         &           2 \\
+ PROPN NOUN                   &           2 \\
+ ADP DET ADJ NOUN             &           2 \\
+ X PUNCT                      &           2 \\
+ NOUN VERB                    &           2 \\
+ SCONJ                        &           2 \\
+ ADJ ADJ                      &           2 \\
+ ADP                          &           2 \\
+ ADJ CCONJ ADJ NOUN           &           1 \\
+ NOUN NOUN NOUN               &           1 \\
+ PROPN PUNCT                  &           1 \\
+ VERB PROPN                   &           1 \\
+ NOUN PUNCT ADJ NOUN          &           1 \\
+ PROPN NOUN NOUN              &           1 \\
+ ADJ NOUN PUNCT ADJ           &           1 \\
+ ADJ PUNCT ADJ                &           1 \\
+ PUNCT ADP NOUN               &           1 \\
+ PROPN PUNCT PROPN PROPN NOUN &           1 \\
+ VERB NOUN PUNCT ADJ NOUN     &           1 \\
+ ADJ PUNCT NOUN               &           1 \\
+ ADJ NOUN NOUN NOUN           &           1 \\
+ VERB ADJ ADJ NOUN            &           1 \\
+ ADV PUNCT NOUN NOUN          &           1 \\
+ PART                         &           1 \\
+ NOUN CCONJ NOUN NOUN NOUN    &           1 \\
+ ADJ PUNCT VERB PROPN         &           1 \\
+ NOUN ADP                     &           1 \\
+ ADP DET NOUN CCONJ ADJ NOUN  &           1 \\
+ DET                          &           1 \\
+ PUNCT                        &           1 \\
+ NOUN NUM NOUN NOUN           &           1 \\
+ ADP DET                      &           1 \\
+\hline
+\end{longtable}
